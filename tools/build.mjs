@@ -182,4 +182,4 @@ async function main() {
   if (missing.length) console.log(`Still missing for ship: ${missing.join(', ')}`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+if (process.argv[1]?.endsWith("build.mjs")) main().catch((e) => { console.error(e); process.exit(1); });
