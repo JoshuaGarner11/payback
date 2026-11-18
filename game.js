@@ -178,6 +178,7 @@
       'Nope. Try being yourself.',
       'Three letters. Yours. Not hard.',
       'Middle name counts, boyo.',
+      'Use the NEW middle name. The one you picked yourself. Like a normal adult.',
     ],
     loginOk: ['There he is. Welcome to the cabinet.'],
     right: [
@@ -197,6 +198,8 @@
       'I expected more from a man your age. Which is a lot.',
       'Wrong. Maybe they sell a brain at the gear store. Buy two.',
       'Bold answer. Bold and incorrect.',
+      'Wrong. Maybe change your name again. That seemed to help last time.',
+      'Wrong. Even your old middle name would have gotten that.',
     ],
     hint: ['Fine. Here\'s a crumb.', 'Charity case. Here.', 'You owe me for this one.', 'A hint? At your age? Sad. Here.'],
     noHints: ['That\'s all I\'ve got. You\'re on your own.'],
@@ -397,14 +400,15 @@
     }
     Sound.start(); flash('good');
     S.loginToken = tok.slice(0, 32);
+    const loginQuip = dec.decode(tok.slice(32));
     S.tokens = {}; S.score = 0; S.lives = 3; S.hintsUsed = {};
     const key = await chainKey(enc.encode('payback-v1'), [S.loginToken]);
     S.steps = [await openStep(key, DATA.chain[0])];
     S.keys = [key];
     S.stepIndex = 0; S.qIndex = 0;
     save();
-    await Skelly.say(LINES.loginOk[0], 'happy');
-    await sleep(500);
+    await Skelly.say(loginQuip || LINES.loginOk[0], 'happy');
+    await sleep(loginQuip ? 1400 : 500);
     stepIntro();
   }
 

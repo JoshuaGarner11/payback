@@ -114,7 +114,7 @@ async function main() {
   }
 
   // Login gate
-  const login = await lockQuestion(content.login.accepted);
+  const login = await lockQuestion(content.login.accepted, content.login.right || '');
   let key = await chainKey(enc.encode('payback-v1'), [login.token]);
 
   const chain = [];
@@ -140,7 +140,7 @@ async function main() {
     // Anyone who unlocks this step can read it in dev tools, so it must not name any answer
     // from this step or later ones.
     if (step.type !== 'ending') {
-      const flat = normalize(plain);
+      const flat = normalize(JSON.stringify(payload, (k, v) => (k === 'salt' || k === 'blobs' ? undefined : v)));
       const idx = steps.indexOf(step);
       for (const later of steps.slice(idx)) {
         if (later.type === 'ending') continue;
