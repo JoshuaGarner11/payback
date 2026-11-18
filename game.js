@@ -207,7 +207,7 @@
     konami: ['Up, up... come on, you know this one in your sleep.'],
     konamiBad: ['That\'s not it. Your thumbs forgot.', 'Clear it and start over.'],
     boss: ['Final boss. This is where it gets personal. And by personal I mean embarrassing.'],
-    ending: ['Game over, boyo. For real this time. Wear the suit.'],
+    ending: ['Game over, boyo. For real this time. Gear up.'],
     aiWarn: ['Asking a robot for help? I AM the robot. And I\'m not telling.'],
   };
 
