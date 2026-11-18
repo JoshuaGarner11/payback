@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#07040f" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>PAYBACK</title>
+  <meta name="description" content="Insert coin." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="carpet" aria-hidden="true"></div>
+
+  <main class="cabinet" id="cabinet">
+    <header class="marquee">
+      <div class="marquee-light" aria-hidden="true"></div>
+      <h1 class="logo" data-text="PAYBACK">PAYBACK</h1>
+      <p class="marquee-sub">Birthday Boy Edition</p>
+    </header>
+
+    <div class="bezel">
+      <div class="crt off" id="crt">
+        <div class="screen" id="screen" aria-live="polite"></div>
+        <div class="skelly" id="skelly" hidden>
+          <canvas id="skelly-sprite" width="64" height="64" aria-hidden="true"></canvas>
+          <div class="skelly-box">
+            <span class="skelly-name">SKELLY</span>
+            <p class="skelly-line" id="skelly-line"></p>
+          </div>
+        </div>
+        <div class="busy" id="busy" hidden><span>CHECKING</span></div>
+        <div class="flash" id="flash" aria-hidden="true"></div>
+        <div class="scanlines" aria-hidden="true"></div>
+        <div class="glass" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <section class="panel" aria-label="Controls">
+      <div class="dpad" role="group" aria-label="Direction pad">
+        <button type="button" class="d up" data-pad="U" aria-label="Up"></button>
+        <button type="button" class="d left" data-pad="L" aria-label="Left"></button>
+        <span class="d hub" aria-hidden="true"></span>
+        <button type="button" class="d right" data-pad="R" aria-label="Right"></button>
+        <button type="button" class="d down" data-pad="D" aria-label="Down"></button>
+      </div>
+      <div class="mid">
+        <button type="button" class="pill" data-pad="S" id="start-btn">Start</button>
+        <button type="button" class="pill coin" id="coin-btn">Coin</button>
+      </div>
+      <div class="ab" role="group" aria-label="Action buttons">
+        <button type="button" class="btn b" data-pad="B" aria-label="B">B</button>
+        <button type="button" class="btn a" data-pad="A" aria-label="A">A</button>
+      </div>
+    </section>
+
+    <footer class="coin-door">
+      <button type="button" class="door-btn" id="mute-btn" aria-pressed="false">Sound On</button>
+      <span class="slot" aria-hidden="true"><i></i></span>
+      <button type="button" class="door-btn" id="reset-btn">Reset</button>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
