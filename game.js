@@ -649,8 +649,28 @@
     if (el) { el.classList.add('pressed'); setTimeout(() => el.classList.remove('pressed'), 120); }
     padHandler && padHandler(k);
   }
-  document.querySelectorAll('[data-pad]').forEach((b) => b.addEventListener('click', () => press(b.dataset.pad, b)));
-  $('#coin-btn').addEventListener('click', () => { if (!padHandler || screen.querySelector('.blink')) press('S'); else Sound.coin(); });
+  // Controls fire on touch-down (instant, no double-tap zoom). Keyboard "click" (detail 0) still works.
+  function bindButton(el, fn) {
+    el.addEventListener('pointerdown', (e) => { if (e.button > 0) return; e.preventDefault(); fn(); });
+    el.addEventListener('click', (e) => { if (e.detail === 0) fn(); });
+    el.addEventListener('dblclick', (e) => e.preventDefault());
+  }
+  document.querySelectorAll('[data-pad]').forEach((b) => bindButton(b, () => press(b.dataset.pad, b)));
+  bindButton($('#coin-btn'), () => { const c = $('#coin-btn'); if (!padHandler || screen.querySelector('.blink')) press('S', c); else { Sound.coin(); c.classList.add('pressed'); setTimeout(() => c.classList.remove('pressed'), 120); } });
+  // iOS Safari only lets audio start inside a touchend/click, so unlock there too.
+  ['touchend', 'click', 'keydown'].forEach((t) => document.addEventListener(t, () => Sound.unlock(), { passive: true }));
+  // Tap the screen to continue on "Press Start" screens.
+  screen.addEventListener('click', (e) => {
+    if (e.target.closest('input, button, a, form')) return;
+    if (screen.querySelector('.blink')) press('S');
+  });
+  // Belt and braces for older iOS: swallow a second tap that lands within 300ms on the cabinet controls.
+  let lastTouch = 0;
+  $('#cabinet').addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouch < 300 && e.target.closest('.panel, .coin-door, .marquee')) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
   addEventListener('keydown', (e) => {
     const typing = !!e.target.matches?.('input, textarea');
     const onKonami = currentStep()?.type === 'konami' && !screen.querySelector('.title-art');

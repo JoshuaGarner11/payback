@@ -18,17 +18,21 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
+html { touch-action: manipulation; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.panel, .coin-door, .marquee, .skelly {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
 body {
   background: var(--night);
   color: var(--phosphor);
   font-family: var(--term);
   display: grid;
   place-items: start center;
-  padding: 24px 16px 40px;
+  padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
 }
-button { font: inherit; color: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 [hidden] { display: none !important; }
 
 /* Arcade carpet */
@@ -118,6 +122,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   isolation: isolate;
 }
 .crt.off .screen { opacity: 0; }
+.screen input { font-size: max(16px, 1em); }
 .crt.on .screen { animation: power-on .7s cubic-bezier(.2, .8, .2, 1) both; }
 @keyframes power-on {
   0% { transform: scale(1, .004); filter: brightness(6); opacity: 1; }
@@ -322,7 +327,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 /* Phone: drop the cabinet chrome, keep the controls */
 @media (max-width: 620px) {
-  body { padding: 0 0 24px; }
+  body { padding: 0 env(safe-area-inset-right) max(24px, env(safe-area-inset-bottom)) env(safe-area-inset-left); }
   .cabinet { border-radius: 0; padding: 0 10px 14px; box-shadow: none; }
   .marquee { margin: 0 -10px 12px; border-radius: 0; padding: 18px 12px 14px; }
   .crt { aspect-ratio: 3 / 4; }
